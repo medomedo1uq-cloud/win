@@ -1,0 +1,1826 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0a0f1e">
+    <title>استضافة HTML PRO | منصة استضافة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        :root {
+            --bg: #0a0f1e;
+            --bg-2: #0e1428;
+            --surface: #131a30;
+            --surface-2: #1a2240;
+            --input-bg: #0d1224;
+            --border: rgba(120, 140, 220, 0.14);
+            --border-2: rgba(120, 140, 220, 0.32);
+            --text: #e8eaf6;
+            --text-2: #a8b0d0;
+            --muted: #6e7798;
+            --muted-2: #565f80;
+            --primary: #7c6cf0;
+            --primary-2: #a08cff;
+            --primary-3: #8b7cff;
+            --primary-soft: rgba(124, 108, 240, 0.14);
+            --primary-glow: rgba(124, 108, 240, 0.32);
+            --success: #10b981;
+            --success-soft: rgba(16, 185, 129, 0.14);
+            --danger: #ef4444;
+            --danger-soft: rgba(239, 68, 68, 0.14);
+            --warning: #f59e0b;
+            --shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --r-sm: 8px;
+            --r: 12px;
+            --r-md: 16px;
+            --r-lg: 22px;
+            --r-full: 9999px;
+            --t: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --t-med: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            /* خلفية ثابتة بدون أي حركة = أخف شيء ممكن */
+            background:
+                radial-gradient(ellipse 60% 50% at 15% 0%, rgba(124, 108, 240, 0.12), transparent 60%),
+                radial-gradient(ellipse 50% 50% at 90% 100%, rgba(139, 92, 246, 0.10), transparent 60%),
+                linear-gradient(180deg, #0a0f1e 0%, #0e1428 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            direction: rtl;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* ================= Welcome Splash ================= */
+        .welcome {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            background: linear-gradient(180deg, #0a0f1e, #0e1428);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .welcome.hide { opacity: 0; pointer-events: none; }
+
+        .welcome-inner {
+            text-align: center;
+            padding: 24px;
+            animation: welcomeIn 0.6s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+        }
+
+        @keyframes welcomeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .welcome-logo {
+            width: 88px;
+            height: 88px;
+            margin: 0 auto 22px;
+            background: linear-gradient(135deg, #7c6cf0, #a08cff);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            color: #fff;
+            box-shadow: 0 20px 50px rgba(124, 108, 240, 0.45);
+        }
+
+        .welcome-title {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #a08cff, #7c6cf0, #a08cff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-sub {
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .welcome-bar {
+            width: 180px;
+            height: 4px;
+            margin: 0 auto;
+            background: rgba(124, 108, 240, 0.15);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+
+        .welcome-bar span {
+            display: block;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, #7c6cf0, #a08cff);
+            border-radius: 9999px;
+            animation: welcomeBar 1.6s ease-in-out infinite;
+        }
+
+        @keyframes welcomeBar {
+            0%   { transform: translateX(-150%); }
+            100% { transform: translateX(400%); }
+        }
+
+        /* ================= Cards ================= */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 1000px;
+            padding: 32px;
+            animation: fadeUp 0.4s ease both;
+            will-change: opacity, transform;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-light {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 22px;
+            transition: border-color var(--t), background var(--t);
+        }
+
+        .card-light:hover {
+            border-color: var(--border-2);
+            background: #1d2648;
+        }
+
+        /* ================= Text ================= */
+        h1, h2, h3, h4 { color: var(--text); font-weight: 700; line-height: 1.3; }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #a08cff, #7c6cf0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ================= Buttons ================= */
+        .btn {
+            padding: 12px 22px;
+            border-radius: var(--r-full);
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            transition: transform var(--t), background var(--t), box-shadow var(--t);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            will-change: transform;
+        }
+
+        .btn:active { transform: scale(0.97); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c6cf0, #6b5ce0);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(124, 108, 240, 0.32);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #8b7cff, #7c6cf0);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 26px rgba(124, 108, 240, 0.45);
+        }
+
+        .btn-secondary {
+            background: rgba(120, 140, 220, 0.1);
+            color: var(--text-2);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(120, 140, 220, 0.18);
+            color: var(--text);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.28);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 26px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-2);
+        }
+
+        .btn-outline:hover {
+            background: rgba(120, 140, 220, 0.08);
+            border-color: var(--border-2);
+            color: var(--text);
+        }
+
+        /* ================= Inputs ================= */
+        .input-group { margin-bottom: 18px; }
+
+        .input-label {
+            display: block;
+            color: var(--text-2);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 13px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--text);
+            font-size: 15px;
+            transition: border-color var(--t), box-shadow var(--t);
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(124, 108, 240, 0.18);
+        }
+
+        .input-field::placeholder { color: var(--muted-2); }
+
+        textarea.input-field {
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        /* ================= Tabs ================= */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-full);
+            padding: 5px;
+            margin-bottom: 26px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 11px 18px;
+            border: none;
+            border-radius: var(--r-full);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background var(--t), color var(--t);
+            background: transparent;
+            color: var(--muted);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #7c6cf0, #6b5ce0);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(124, 108, 240, 0.3);
+        }
+
+        .tab:not(.active):hover { color: var(--text-2); background: rgba(120, 140, 220, 0.06); }
+
+        /* ================= Nav Pills ================= */
+        .nav-pills {
+            display: flex;
+            gap: 5px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r-full);
+            padding: 5px;
+            flex-wrap: wrap;
+        }
+
+        .nav-pill {
+            padding: 9px 18px;
+            border-radius: var(--r-full);
+            font-weight: 600;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            transition: background var(--t), color var(--t);
+            background: transparent;
+            color: var(--muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .nav-pill.active {
+            background: linear-gradient(135deg, #7c6cf0, #6b5ce0);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(124, 108, 240, 0.3);
+        }
+
+        .nav-pill:not(.active):hover {
+            background: rgba(120, 140, 220, 0.08);
+            color: var(--text-2);
+        }
+
+        /* ================= Stat Cards ================= */
+        .stat-card {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            padding: 22px 18px;
+            text-align: center;
+            transition: transform var(--t), border-color var(--t), box-shadow var(--t);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-2);
+            box-shadow: 0 10px 28px rgba(124, 108, 240, 0.18);
+        }
+
+        .stat-value {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 4px;
+            background: linear-gradient(135deg, #a08cff, #7c6cf0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* ================= Table ================= */
+        .table-container {
+            overflow-x: auto;
+            border-radius: var(--r);
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        th {
+            background: rgba(120, 140, 220, 0.05);
+            padding: 14px 16px;
+            font-weight: 600;
+            color: var(--text-2);
+            font-size: 12px;
+            text-align: right;
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-2);
+            font-size: 13px;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tbody tr { transition: background var(--t); }
+        tbody tr:hover td { background: rgba(124, 108, 240, 0.05); }
+
+        /* ================= Badges ================= */
+        .badge {
+            padding: 5px 12px;
+            border-radius: var(--r-full);
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            width: fit-content;
+        }
+
+        .badge-active {
+            background: var(--success-soft);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.28);
+        }
+
+        .badge-banned {
+            background: var(--danger-soft);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.28);
+        }
+
+        .badge-admin {
+            background: var(--primary-soft);
+            color: #c4b5fd;
+            border: 1px solid rgba(124, 108, 240, 0.28);
+        }
+
+        /* ================= Upload ================= */
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: var(--r-lg);
+            padding: 42px 22px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color var(--t), background var(--t);
+            background: var(--input-bg);
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background: rgba(124, 108, 240, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 52px;
+            color: #a08cff;
+            margin-bottom: 14px;
+        }
+
+        /* ================= File Items ================= */
+        .file-item {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 16px 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color var(--t), transform var(--t);
+        }
+
+        .file-item:hover {
+            border-color: var(--border-2);
+            transform: translateX(-3px);
+        }
+
+        .file-info h4 { color: var(--text); margin-bottom: 5px; font-size: 14px; }
+
+        .file-meta {
+            display: flex;
+            gap: 14px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* ================= Toast ================= */
+        .toast {
+            position: fixed;
+            top: 22px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            background: var(--surface-2);
+            border: 1px solid var(--border-2);
+            border-radius: var(--r-full);
+            padding: 13px 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            z-index: 9999;
+            transition: transform 0.4s cubic-bezier(0.34, 1.4, 0.64, 1);
+            min-width: 260px;
+            will-change: transform;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        .toast-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .toast-success { background: var(--success); }
+        .toast-error { background: var(--danger); }
+
+        .toast-content { color: var(--text); font-size: 13px; font-weight: 500; }
+
+        /* ================= Modal ================= */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            padding: 20px;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: var(--surface);
+            border: 1px solid var(--border-2);
+            border-radius: var(--r-lg);
+            padding: 24px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            animation: fadeUp 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .modal-close {
+            background: var(--danger-soft);
+            border: 1px solid rgba(239, 68, 68, 0.28);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            color: #f87171;
+            transition: background var(--t), transform var(--t);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            background: var(--danger);
+            color: #fff;
+            transform: rotate(90deg);
+        }
+
+        /* ================= Progress ================= */
+        .progress {
+            height: 5px;
+            background: rgba(120, 140, 220, 0.12);
+            border-radius: var(--r-full);
+            overflow: hidden;
+            margin-top: 14px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #7c6cf0, #a08cff);
+            border-radius: var(--r-full);
+            transition: width 0.35s ease;
+            will-change: width;
+        }
+
+        /* ================= Grids ================= */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 16px;
+            margin: 26px 0;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin: 22px 0;
+        }
+
+        /* ================= Footer ================= */
+        .footer {
+            text-align: center;
+            padding-top: 28px;
+            margin-top: 28px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color var(--t);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .footer-link:hover { color: #a08cff; }
+
+        /* ================= Quick Links ================= */
+        .quick-links { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .quick-link {
+            padding: 5px 12px;
+            background: rgba(120, 140, 220, 0.08);
+            border: 1px solid var(--border);
+            border-radius: var(--r-full);
+            color: var(--text-2);
+            text-decoration: none;
+            font-size: 12px;
+            transition: background var(--t), border-color var(--t), color var(--t);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .quick-link:hover {
+            background: var(--primary-soft);
+            border-color: var(--border-2);
+            color: #c4b5fd;
+        }
+
+        /* ================= Admin Sections ================= */
+        .admin-section { animation: fadeUp 0.3s ease; }
+
+        /* ================= Responsive ================= */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .card { padding: 20px; border-radius: var(--r-md); }
+            .tabs { border-radius: var(--r); }
+            .tab { padding: 9px; font-size: 13px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .file-item { flex-direction: column; gap: 14px; align-items: flex-start; }
+            .file-actions { width: 100%; display: flex; gap: 10px; }
+            .nav-pills { border-radius: var(--r); }
+            .nav-pill { padding: 8px 12px; font-size: 12px; }
+            .welcome-title { font-size: 24px; }
+        }
+
+        /* ================= Scrollbar ================= */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--input-bg); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #7c6cf0, #6b5ce0);
+            border-radius: var(--r-full);
+        }
+
+        ::selection { background: rgba(124, 108, 240, 0.4); color: #fff; }
+
+        /* ================= Reduced Motion ================= */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============ Welcome Splash ============ -->
+    <div class="welcome" id="welcomeOverlay">
+        <div class="welcome-inner">
+            <div class="welcome-logo">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <h1 class="welcome-title">استضافة HTML PRO</h1>
+            <p class="welcome-sub">منصتك الاحترافية لاستضافة صفحات HTML</p>
+            <div class="welcome-bar"><span></span></div>
+        </div>
+    </div>
+
+    <!-- ============ Toast ============ -->
+    <div class="toast" id="toast">
+        <div class="toast-icon toast-success" id="toastIcon">
+            <i class="fas fa-check"></i>
+        </div>
+        <div class="toast-content" id="toastText">تمت العملية بنجاح</div>
+    </div>
+
+    <!-- ============ Preview Modal ============ -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-eye" style="color:#a08cff;"></i> معاينة الموقع</h3>
+                <button class="modal-close" id="closePreview">×</button>
+            </div>
+            <iframe id="previewFrame" style="width:100%;height:500px;border:1px solid var(--border);border-radius:var(--r);background:#fff;" sandbox="allow-scripts"></iframe>
+        </div>
+    </div>
+
+    <!-- ============ Login ============ -->
+    <div class="card" id="loginContainer" style="max-width:460px;">
+        <div style="text-align:center;margin-bottom:28px;">
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px;">
+                <div style="width:60px;height:60px;background:linear-gradient(145deg,#7c6cf0,#a08cff);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;box-shadow:0 12px 30px rgba(124,108,240,0.4);">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h1 class="gradient-text" style="font-size:32px;margin:0;font-weight:800;letter-spacing:-0.02em;">PRO</h1>
+            </div>
+            <p style="color:#a08cff;font-size:15px;font-weight:600;margin-bottom:4px;">استضافة HTML PRO</p>
+            <p style="color:var(--muted);font-size:12px;">منصة استضافة HTML بتصميم عصري</p>
+            <div class="quick-links" style="justify-content:center;margin-top:14px;">
+                <a href="https://t.me/yyf_r" target="_blank" class="quick-link">
+                    <i class="fab fa-telegram"></i> @yyf_r
+                </a>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="login">تسجيل الدخول</button>
+            <button class="tab" data-tab="register">إنشاء حساب</button>
+        </div>
+
+        <div class="tab-content active" id="loginForm">
+            <div class="input-group">
+                <label class="input-label">اسم المستخدم</label>
+                <input type="text" id="loginUsername" class="input-field" placeholder="أدخل اسم المستخدم">
+                <div class="form-error" id="loginUsernameError" style="color:#f87171;font-size:12px;margin-top:4px;display:none;">اسم المستخدم غير صحيح</div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">كلمة المرور</label>
+                <input type="password" id="loginPassword" class="input-field" placeholder="أدخل كلمة المرور">
+                <div class="form-error" id="loginPasswordError" style="color:#f87171;font-size:12px;margin-top:4px;display:none;">كلمة المرور غير صحيحة</div>
+            </div>
+            <button class="btn btn-primary" id="loginSubmit" style="width:100%;margin-bottom:10px;">
+                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+            </button>
+            <button class="btn btn-outline" id="adminLoginBtn" style="width:100%;">
+                <i class="fas fa-user-shield"></i> تسجيل الدخول كمسؤول
+            </button>
+        </div>
+
+        <div class="tab-content" id="registerForm" style="display:none;">
+            <div class="input-group">
+                <label class="input-label">اسم المستخدم</label>
+                <input type="text" id="registerUsername" class="input-field" placeholder="إنجليزي، 5 أحرف على الأقل">
+                <div class="form-error" id="registerUsernameError" style="color:#f87171;font-size:12px;margin-top:4px;display:none;">اسم المستخدم يجب أن يكون إنجليزي و5 أحرف على الأقل</div>
+                <div style="color:var(--muted);font-size:11px;margin-top:4px;">إنجليزي، 5 أحرف على الأقل</div>
+            </div>
+            <div class="input-group">
+                <label class="input-label">كلمة المرور</label>
+                <input type="password" id="registerPassword" class="input-field" placeholder="10 أحرف على الأقل">
+                <div class="form-error" id="registerPasswordError" style="color:#f87171;font-size:12px;margin-top:4px;display:none;">كلمة المرور يجب أن تكون 10 أحرف على الأقل وتحتوي على حروف كبيرة وصغيرة وأرقام</div>
+                <div style="color:var(--muted);font-size:11px;margin-top:4px;">10 أحرف+، حرف كبير، حرف صغير، رقم</div>
+            </div>
+            <button class="btn btn-primary" id="registerSubmit" style="width:100%;">
+                <i class="fas fa-user-plus"></i> إنشاء حساب
+            </button>
+        </div>
+    </div>
+
+    <!-- ============ Main App ============ -->
+    <div class="card" id="mainContainer" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;margin-bottom:28px;">
+            <div style="display:flex;align-items:center;gap:14px;">
+                <div style="width:52px;height:52px;background:linear-gradient(145deg,#7c6cf0,#a08cff);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;box-shadow:0 8px 22px rgba(124,108,240,0.35);">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <div>
+                    <h2 style="font-size:20px;font-weight:800;" class="gradient-text">استضافة HTML PRO</h2>
+                    <p style="color:var(--muted);font-size:12px;">منصة استضافة HTML</p>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                <div class="badge badge-admin">
+                    <i class="fas fa-user"></i>
+                    <span id="userNameDisplay"></span>
+                </div>
+                <button class="btn btn-outline" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> خروج
+                </button>
+            </div>
+        </div>
+
+        <div class="card-light" style="margin-bottom:22px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+                <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+                    <div class="badge badge-admin">
+                        <i class="fas fa-code"></i> المطور: @yyf_r
+                    </div>
+                    <span style="color:var(--muted);font-size:12px;">
+                        <i class="fas fa-info-circle" style="color:#c4b5fd;"></i>
+                        منصتك الاحترافية لاستضافة صفحات HTML
+                    </span>
+                </div>
+                <a href="https://t.me/yyf_r" target="_blank" class="btn btn-outline" style="text-decoration:none;">
+                    <i class="fab fa-telegram"></i> تواصل
+                </a>
+            </div>
+        </div>
+
+        <div class="card-light" id="filesSection" style="margin-bottom:22px;display:none;">
+            <h3 style="margin-bottom:18px;display:flex;align-items:center;gap:8px;font-size:16px;">
+                <i class="fas fa-folder-open" style="color:#a08cff;"></i> ملفاتي
+            </h3>
+            <div id="filesList"></div>
+        </div>
+
+        <div class="upload-area" id="uploadArea" style="margin-bottom:22px;">
+            <div class="upload-icon">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <h3 style="margin-bottom:6px;font-size:17px;">رفع ملف HTML</h3>
+            <p style="color:var(--muted);margin-bottom:18px;font-size:12px;">اسحب وأفلت الملف هنا أو انقر للاختيار</p>
+            <label class="btn btn-primary" style="cursor:pointer;">
+                <i class="fas fa-folder-open"></i> اختر ملف
+                <input type="file" id="fileInput" style="display:none;" accept=".html,.htm">
+            </label>
+            <div id="fileName" style="margin-top:14px;"></div>
+            <div class="progress" id="progress" style="display:none;">
+                <div class="progress-bar" id="progressBar" style="width:0%;"></div>
+            </div>
+        </div>
+
+        <div class="card-light" style="margin-bottom:22px;">
+            <h3 style="margin-bottom:14px;display:flex;align-items:center;gap:8px;font-size:16px;">
+                <i class="fas fa-code" style="color:#a08cff;"></i> أو اكتب الكود هنا
+            </h3>
+            <textarea id="codeInput" class="input-field" placeholder="الصق كود HTML هنا..." style="height:230px;"></textarea>
+        </div>
+
+        <div class="actions-grid">
+            <button class="btn btn-primary" id="uploadBtn">
+                <i class="fas fa-cloud-upload-alt"></i> رفع الموقع
+            </button>
+            <button class="btn btn-danger" id="deleteFilesBtn">
+                <i class="fas fa-trash-alt"></i> حذف الملفات
+            </button>
+            <button class="btn btn-outline" id="clearBtn">
+                <i class="fas fa-broom"></i> مسح الكل
+            </button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalSites">0</div>
+                <div class="stat-label">مواقع مرفوعة</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalViews">0</div>
+                <div class="stat-label">مشاهدات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="activeSites">0</div>
+                <div class="stat-label">مواقع نشطة</div>
+            </div>
+        </div>
+
+        <div class="card-light" id="resultSection" style="display:none;">
+            <h3 style="margin-bottom:14px;display:flex;align-items:center;gap:8px;font-size:16px;">
+                <i class="fas fa-link" style="color:#a08cff;"></i> رابط موقعك
+            </h3>
+            <div style="background:var(--input-bg);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:18px;border-right:3px solid #10b981;font-family:monospace;word-break:break-all;color:var(--text-2);font-size:12px;" id="urlDisplay"></div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;">
+                <button class="btn" id="copyBtn" style="background:linear-gradient(135deg,#10b981,#059669);color:#fff;">
+                    <i class="fas fa-copy"></i> نسخ
+                </button>
+                <button class="btn btn-primary" id="openBtn">
+                    <i class="fas fa-external-link-alt"></i> فتح
+                </button>
+                <button class="btn btn-danger" id="deleteBtn">
+                    <i class="fas fa-trash-alt"></i> حذف
+                </button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-links">
+                <a href="https://t.me/yyf_r" target="_blank" class="footer-link">
+                    <i class="fab fa-telegram"></i> @yyf_r
+                </a>
+                <a href="#" id="adminAccessBtn" class="footer-link">
+                    <i class="fas fa-user-shield"></i> لوحة التحكم
+                </a>
+            </div>
+            <div>© 2026 استضافة HTML PRO - جميع الحقوق محفوظة</div>
+        </div>
+    </div>
+
+    <!-- ============ Admin Panel ============ -->
+    <div class="card admin-panel" id="adminPanel" style="display:none;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;margin-bottom:28px;">
+            <div style="display:flex;align-items:center;gap:14px;">
+                <div style="width:52px;height:52px;background:linear-gradient(145deg,#7c6cf0,#a08cff);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;box-shadow:0 8px 22px rgba(124,108,240,0.35);">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div>
+                    <h2 style="font-size:20px;font-weight:800;" class="gradient-text">لوحة التحكم</h2>
+                    <p style="color:var(--muted);font-size:12px;">المسؤول: <span id="adminNameDisplay"></span></p>
+                </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+                <div class="badge badge-admin">
+                    <i class="fas fa-crown"></i> مسؤول النظام
+                </div>
+                <button class="btn btn-outline" id="adminLogoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> خروج
+                </button>
+            </div>
+        </div>
+
+        <div class="nav-pills" style="margin-bottom:26px;">
+            <button class="nav-pill active" data-section="dashboard">
+                <i class="fas fa-tachometer-alt"></i> لوحة التحكم
+            </button>
+            <button class="nav-pill" data-section="users">
+                <i class="fas fa-users"></i> المستخدمين
+            </button>
+            <button class="nav-pill" data-section="sites">
+                <i class="fas fa-globe"></i> المواقع
+            </button>
+            <button class="nav-pill" data-section="banned">
+                <i class="fas fa-ban"></i> المحظورين
+            </button>
+            <button class="nav-pill" id="backToApp">
+                <i class="fas fa-arrow-right"></i> العودة
+            </button>
+        </div>
+
+        <div class="admin-section active" id="dashboardSection">
+            <div class="card-light">
+                <h3 style="margin-bottom:22px;font-size:16px;"><i class="fas fa-tachometer-alt" style="color:#a08cff;"></i> إحصائيات المنصة</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="adminTotalUsers">0</div>
+                        <div class="stat-label">إجمالي المستخدمين</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="adminTotalSites">0</div>
+                        <div class="stat-label">إجمالي المواقع</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="adminTotalViews">0</div>
+                        <div class="stat-label">إجمالي المشاهدات</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="adminBannedUsers">0</div>
+                        <div class="stat-label">مستخدمين محظورين</div>
+                    </div>
+                </div>
+                <h3 style="margin:28px 0 18px;font-size:16px;"><i class="fas fa-history" style="color:#a08cff;"></i> آخر النشاطات</h3>
+                <div id="adminActivity"></div>
+            </div>
+        </div>
+
+        <div class="admin-section" id="usersSection" style="display:none;">
+            <div class="card-light">
+                <h3 style="margin-bottom:18px;font-size:16px;"><i class="fas fa-users" style="color:#a08cff;"></i> إدارة المستخدمين</h3>
+                <input type="text" id="searchUsers" class="input-field" placeholder="بحث عن مستخدم..." style="margin-bottom:18px;">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم المستخدم</th>
+                                <th>تاريخ التسجيل</th>
+                                <th>المواقع</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-section" id="sitesSection" style="display:none;">
+            <div class="card-light">
+                <h3 style="margin-bottom:18px;font-size:16px;"><i class="fas fa-globe" style="color:#a08cff;"></i> إدارة المواقع</h3>
+                <input type="text" id="searchSites" class="input-field" placeholder="بحث عن موقع..." style="margin-bottom:18px;">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم الموقع</th>
+                                <th>المالك</th>
+                                <th>تاريخ الرفع</th>
+                                <th>المشاهدات</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sitesTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-section" id="bannedSection" style="display:none;">
+            <div class="card-light">
+                <h3 style="margin-bottom:18px;font-size:16px;"><i class="fas fa-ban" style="color:#f87171;"></i> المستخدمين المحظورين</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>اسم المستخدم</th>
+                                <th>تاريخ الحظر</th>
+                                <th>سبب الحظر</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bannedTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ================= Sound FX (Web Audio - only on click, no CPU burn) ================= */
+        const SoundFX = (() => {
+            let ctx = null;
+            function getCtx() {
+                if (!ctx) {
+                    try { ctx = new (window.AudioContext || window.webkitAudioContext)(); }
+                    catch (e) { ctx = null; }
+                }
+                if (ctx && ctx.state === 'suspended') ctx.resume();
+                return ctx;
+            }
+            function tone(freq, dur, vol) {
+                const c = getCtx(); if (!c) return;
+                try {
+                    const osc = c.createOscillator();
+                    const gain = c.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, c.currentTime);
+                    gain.gain.setValueAtTime(vol, c.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + dur);
+                    osc.connect(gain); gain.connect(c.destination);
+                    osc.start(); osc.stop(c.currentTime + dur);
+                } catch (e) {}
+            }
+            return {
+                click() { tone(880, 0.05, 0.04); },
+                success() { tone(660, 0.08, 0.05); setTimeout(() => tone(990, 0.1, 0.05), 60); },
+                error() { tone(200, 0.14, 0.055); }
+            };
+        })();
+
+        // صوت التكة فقط على الأزرار (بدون mousemove)
+        document.addEventListener('pointerdown', (e) => {
+            const b = e.target.closest('button, .btn, .tab, .nav-pill, label.btn');
+            if (b) SoundFX.click();
+        }, { passive: true });
+
+        /* ================= Welcome Splash ================= */
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('welcomeOverlay');
+            if (sessionStorage.getItem('welcomeShown')) {
+                overlay.remove();
+                return;
+            }
+            sessionStorage.setItem('welcomeShown', '1');
+            setTimeout(() => {
+                overlay.classList.add('hide');
+                setTimeout(() => overlay.remove(), 600);
+            }, 1700);
+        });
+
+        /* ================= App Logic (unchanged) ================= */
+        const elements = {
+            loginContainer: document.getElementById('loginContainer'),
+            mainContainer: document.getElementById('mainContainer'),
+            adminPanel: document.getElementById('adminPanel'),
+            tabButtons: document.querySelectorAll('[data-tab]'),
+            loginForm: document.getElementById('loginForm'),
+            registerForm: document.getElementById('registerForm'),
+            loginUsername: document.getElementById('loginUsername'),
+            loginPassword: document.getElementById('loginPassword'),
+            loginSubmit: document.getElementById('loginSubmit'),
+            adminLoginBtn: document.getElementById('adminLoginBtn'),
+            registerUsername: document.getElementById('registerUsername'),
+            registerPassword: document.getElementById('registerPassword'),
+            registerSubmit: document.getElementById('registerSubmit'),
+            logoutBtn: document.getElementById('logoutBtn'),
+            adminLogoutBtn: document.getElementById('adminLogoutBtn'),
+            userNameDisplay: document.getElementById('userNameDisplay'),
+            adminNameDisplay: document.getElementById('adminNameDisplay'),
+            adminAccessBtn: document.getElementById('adminAccessBtn'),
+            backToApp: document.getElementById('backToApp'),
+            adminNavBtns: document.querySelectorAll('[data-section]'),
+            adminSections: document.querySelectorAll('.admin-section'),
+            adminTotalUsers: document.getElementById('adminTotalUsers'),
+            adminTotalSites: document.getElementById('adminTotalSites'),
+            adminTotalViews: document.getElementById('adminTotalViews'),
+            adminBannedUsers: document.getElementById('adminBannedUsers'),
+            adminActivity: document.getElementById('adminActivity'),
+            usersTableBody: document.getElementById('usersTableBody'),
+            sitesTableBody: document.getElementById('sitesTableBody'),
+            bannedTableBody: document.getElementById('bannedTableBody'),
+            searchUsers: document.getElementById('searchUsers'),
+            searchSites: document.getElementById('searchSites'),
+            filesSection: document.getElementById('filesSection'),
+            filesList: document.getElementById('filesList'),
+            deleteFilesBtn: document.getElementById('deleteFilesBtn'),
+            fileInput: document.getElementById('fileInput'),
+            codeInput: document.getElementById('codeInput'),
+            uploadBtn: document.getElementById('uploadBtn'),
+            clearBtn: document.getElementById('clearBtn'),
+            resultSection: document.getElementById('resultSection'),
+            urlDisplay: document.getElementById('urlDisplay'),
+            copyBtn: document.getElementById('copyBtn'),
+            openBtn: document.getElementById('openBtn'),
+            deleteBtn: document.getElementById('deleteBtn'),
+            fileName: document.getElementById('fileName'),
+            progress: document.getElementById('progress'),
+            progressBar: document.getElementById('progressBar'),
+            uploadArea: document.getElementById('uploadArea'),
+            previewModal: document.getElementById('previewModal'),
+            previewFrame: document.getElementById('previewFrame'),
+            closePreview: document.getElementById('closePreview'),
+            toast: document.getElementById('toast'),
+            toastIcon: document.getElementById('toastIcon'),
+            toastText: document.getElementById('toastText'),
+            totalSites: document.getElementById('totalSites'),
+            totalViews: document.getElementById('totalViews'),
+            activeSites: document.getElementById('activeSites')
+        };
+
+        const DB_USERS = 'ico_users';
+        const DB_SITES = 'ico_sites';
+        const DB_ADMINS = 'ico_admins';
+        const DB_BANNED = 'ico_banned';
+        const DB_ACTIVITY = 'ico_activity';
+
+        let usersDatabase = JSON.parse(localStorage.getItem(DB_USERS)) || {};
+        let sitesDatabase = JSON.parse(localStorage.getItem(DB_SITES)) || {};
+        let adminsDatabase = JSON.parse(localStorage.getItem(DB_ADMINS)) || {};
+        let bannedDatabase = JSON.parse(localStorage.getItem(DB_BANNED)) || {};
+        let activityDatabase = JSON.parse(localStorage.getItem(DB_ACTIVITY)) || [];
+
+        let currentUser = null;
+        let currentSiteId = null;
+        let isAdmin = false;
+
+        const ADMIN_PASSWORD = 'YyF@Root!2026#Secure$9xL';
+
+        if (!adminsDatabase.admin) {
+            adminsDatabase.admin = { username: 'admin', password: ADMIN_PASSWORD, created: new Date().toISOString() };
+            localStorage.setItem(DB_ADMINS, JSON.stringify(adminsDatabase));
+        }
+
+        function validateUsername(u) { return /^[a-zA-Z]{5,}$/.test(u); }
+        function validatePassword(p) { return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{10,}$/.test(p); }
+
+        function showToast(msg, type = 'success') {
+            elements.toastText.textContent = msg;
+            elements.toastIcon.className = 'toast-icon ' + (type === 'success' ? 'toast-success' : 'toast-error');
+            elements.toastIcon.innerHTML = type === 'success' ? '<i class="fas fa-check"></i>' : '<i class="fas fa-exclamation"></i>';
+            elements.toast.classList.add('show');
+            if (type === 'success') SoundFX.success(); else SoundFX.error();
+            setTimeout(() => elements.toast.classList.remove('show'), 2800);
+        }
+
+        function showError(id, show = true) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = show ? 'block' : 'none';
+        }
+
+        function addActivityLog(action, details) {
+            const log = { id: 'log_' + Date.now(), action, details, timestamp: new Date().toISOString(), admin: isAdmin ? currentUser : null };
+            activityDatabase.unshift(log);
+            if (activityDatabase.length > 50) activityDatabase = activityDatabase.slice(0, 50);
+            localStorage.setItem(DB_ACTIVITY, JSON.stringify(activityDatabase));
+            if (isAdmin && elements.adminActivity) loadActivityLogs();
+        }
+
+        function loadActivityLogs() {
+            const recent = activityDatabase.slice(0, 10);
+            elements.adminActivity.innerHTML = recent.map(log => `
+                <div style="background:var(--input-bg);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;border-right:3px solid #7c6cf0;">
+                    <div style="display:flex;justify-content:space-between;margin-bottom:5px;flex-wrap:wrap;gap:5px;">
+                        <span style="font-weight:600;color:var(--text);font-size:13px;">${log.action}</span>
+                        <span style="color:var(--muted);font-size:11px;">${new Date(log.timestamp).toLocaleString('ar-EG')}</span>
+                    </div>
+                    <div style="color:var(--text-2);font-size:12px;">${log.details}</div>
+                    ${log.admin ? `<div style="color:#c4b5fd;font-size:11px;margin-top:6px;">بواسطة: ${log.admin}</div>` : ''}
+                </div>`).join('');
+        }
+
+        function checkLoginStatus() {
+            const u = sessionStorage.getItem('loggedInUser');
+            const a = sessionStorage.getItem('loggedInAdmin');
+            if (a) { currentUser = a; isAdmin = true; showAdminPanel(); return true; }
+            if (u) { currentUser = u; isAdmin = false; showMainApp(); return true; }
+            return false;
+        }
+
+        function showMainApp() {
+            elements.loginContainer.style.display = 'none';
+            elements.adminPanel.style.display = 'none';
+            elements.mainContainer.style.display = 'block';
+            elements.userNameDisplay.textContent = currentUser;
+            loadUserFiles();
+            updateStats();
+            setTimeout(() => showToast(`أهلاً بك في استضافة HTML PRO ✨`), 300);
+        }
+
+        function showAdminPanel() {
+            elements.loginContainer.style.display = 'none';
+            elements.mainContainer.style.display = 'none';
+            elements.adminPanel.style.display = 'block';
+            elements.adminNameDisplay.textContent = currentUser;
+            loadAdminDashboard();
+        }
+
+        function loadUserFiles() {
+            const list = Object.values(sitesDatabase).filter(s => s.owner === currentUser).sort((a, b) => new Date(b.date) - new Date(a.date));
+            if (list.length > 0) {
+                elements.filesSection.style.display = 'block';
+                elements.filesList.innerHTML = list.map(site => `
+                    <div class="file-item" data-id="${site.id}">
+                        <div class="file-info">
+                            <h4>${site.name}</h4>
+                            <div class="file-meta">
+                                <span><i class="far fa-calendar" style="color:#a08cff;"></i> ${new Date(site.date).toLocaleDateString('ar-EG')}</span>
+                                <span><i class="far fa-eye" style="color:#a08cff;"></i> ${site.views || 0} مشاهدة</span>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button class="btn btn-outline view-file" data-id="${site.id}" style="padding:7px 13px;"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-danger delete-file" data-id="${site.id}" style="padding:7px 13px;"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>`).join('');
+            } else {
+                elements.filesSection.style.display = 'none';
+            }
+        }
+
+        function loadAdminDashboard() {
+            const totalUsers = Object.keys(usersDatabase).length;
+            const totalSites = Object.keys(sitesDatabase).length;
+            const totalBanned = Object.keys(bannedDatabase).length;
+            let totalViews = 0;
+            Object.values(sitesDatabase).forEach(s => { if (s.views) totalViews += s.views; });
+            elements.adminTotalUsers.textContent = totalUsers;
+            elements.adminTotalSites.textContent = totalSites;
+            elements.adminTotalViews.textContent = totalViews;
+            elements.adminBannedUsers.textContent = totalBanned;
+            loadActivityLogs(); loadUsersTable(); loadSitesTable(); loadBannedTable();
+        }
+
+        function loadUsersTable() {
+            elements.usersTableBody.innerHTML = Object.values(usersDatabase).map(user => {
+                const userSites = Object.values(sitesDatabase).filter(s => s.owner === user.username);
+                const isBanned = bannedDatabase[user.username];
+                return `<tr>
+                    <td><span style="font-weight:600;color:var(--text);">${user.username}</span></td>
+                    <td>${new Date(user.created).toLocaleDateString('ar-EG')}</td>
+                    <td><span class="badge badge-admin">${userSites.length}</span></td>
+                    <td><span class="badge ${isBanned ? 'badge-banned' : 'badge-active'}"><i class="fas ${isBanned ? 'fa-ban' : 'fa-circle'}"></i> ${isBanned ? 'محظور' : 'نشط'}</span></td>
+                    <td>
+                        <button class="btn btn-outline view-user" data-user="${user.username}" style="padding:5px 10px;font-size:11px;"><i class="fas fa-eye"></i></button>
+                        ${!isBanned ?
+                            `<button class="btn btn-outline ban-user" data-user="${user.username}" style="padding:5px 10px;font-size:11px;color:#fbbf24;border-color:rgba(245,158,11,0.3);"><i class="fas fa-ban"></i></button>` :
+                            `<button class="btn btn-outline unban-user" data-user="${user.username}" style="padding:5px 10px;font-size:11px;color:#34d399;border-color:rgba(16,185,129,0.3);"><i class="fas fa-check"></i></button>`}
+                        <button class="btn btn-danger delete-user" data-user="${user.username}" style="padding:5px 10px;font-size:11px;"><i class="fas fa-trash"></i></button>
+                    </td></tr>`;
+            }).join('');
+        }
+
+        function loadSitesTable() {
+            elements.sitesTableBody.innerHTML = Object.values(sitesDatabase).sort((a, b) => new Date(b.date) - new Date(a.date)).map(site => `
+                <tr>
+                    <td><span style="font-weight:600;color:var(--text);">${site.name}</span></td>
+                    <td>${site.owner}</td>
+                    <td>${new Date(site.date).toLocaleDateString('ar-EG')}</td>
+                    <td><span class="badge badge-admin">${site.views || 0}</span></td>
+                    <td>
+                        <button class="btn btn-outline preview-site" data-id="${site.id}" style="padding:5px 10px;font-size:11px;"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-danger delete-site" data-id="${site.id}" style="padding:5px 10px;font-size:11px;"><i class="fas fa-trash"></i></button>
+                    </td></tr>`).join('');
+        }
+
+        function loadBannedTable() {
+            elements.bannedTableBody.innerHTML = Object.keys(bannedDatabase).map(username => {
+                const info = bannedDatabase[username];
+                return `<tr>
+                    <td><span style="font-weight:600;color:var(--text);">${username}</span></td>
+                    <td>${new Date(info.bannedAt).toLocaleDateString('ar-EG')}</td>
+                    <td>${info.reason || 'غير محدد'}</td>
+                    <td>
+                        <button class="btn btn-outline unban-user" data-user="${username}" style="padding:5px 10px;font-size:11px;color:#34d399;border-color:rgba(16,185,129,0.3);"><i class="fas fa-check"></i> فك الحظر</button>
+                        <button class="btn btn-danger delete-user" data-user="${username}" style="padding:5px 10px;font-size:11px;"><i class="fas fa-trash"></i></button>
+                    </td></tr>`;
+            }).join('');
+        }
+
+        function updateStats() {
+            if (!currentUser) return;
+            const list = Object.values(sitesDatabase).filter(s => s.owner === currentUser);
+            let views = 0, active = 0;
+            list.forEach(s => {
+                if (s.views) views += s.views;
+                if (Date.now() - new Date(s.date) < 30 * 24 * 60 * 60 * 1000) active++;
+            });
+            elements.totalSites.textContent = list.length;
+            elements.totalViews.textContent = views;
+            elements.activeSites.textContent = active;
+        }
+
+        elements.tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.getAttribute('data-tab');
+                elements.tabButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                elements.loginForm.style.display = tab === 'login' ? 'block' : 'none';
+                elements.registerForm.style.display = tab === 'register' ? 'block' : 'none';
+            });
+        });
+
+        elements.loginSubmit.addEventListener('click', () => {
+            const username = elements.loginUsername.value.trim();
+            const password = elements.loginPassword.value;
+            showError('loginUsernameError', false);
+            showError('loginPasswordError', false);
+            if (!username) { showError('loginUsernameError', true); return; }
+            if (!password) { showError('loginPasswordError', true); return; }
+            if (bannedDatabase[username]) { showError('loginUsernameError', true); showToast('هذا الحساب محظور', 'error'); return; }
+            if (!usersDatabase[username]) { showError('loginUsernameError', true); showToast('اسم المستخدم غير موجود', 'error'); return; }
+            if (usersDatabase[username].password !== password) { showError('loginPasswordError', true); showToast('كلمة المرور غير صحيحة', 'error'); return; }
+            currentUser = username; isAdmin = false;
+            sessionStorage.setItem('loggedInUser', username);
+            showMainApp();
+            addActivityLog('تسجيل دخول مستخدم', `قام المستخدم ${username} بتسجيل الدخول`);
+            showToast('تم تسجيل الدخول بنجاح');
+        });
+
+        elements.registerSubmit.addEventListener('click', () => {
+            const username = elements.registerUsername.value.trim();
+            const password = elements.registerPassword.value;
+            showError('registerUsernameError', false);
+            showError('registerPasswordError', false);
+            if (!validateUsername(username)) { showError('registerUsernameError', true); return; }
+            if (!validatePassword(password)) { showError('registerPasswordError', true); return; }
+            if (usersDatabase[username]) { showError('registerUsernameError', true); showToast('اسم المستخدم موجود بالفعل', 'error'); return; }
+            usersDatabase[username] = { username, password, created: new Date().toISOString() };
+            localStorage.setItem(DB_USERS, JSON.stringify(usersDatabase));
+            currentUser = username; isAdmin = false;
+            sessionStorage.setItem('loggedInUser', username);
+            showMainApp();
+            addActivityLog('تسجيل مستخدم جديد', `قام ${username} بإنشاء حساب جديد`);
+            showToast('تم إنشاء الحساب بنجاح');
+        });
+
+        elements.adminLoginBtn.addEventListener('click', () => {
+            const username = prompt('اسم المستخدم المسؤول:');
+            if (!username) return;
+            const password = prompt('كلمة مرور المسؤول:');
+            if (!password) return;
+            if (password === ADMIN_PASSWORD) {
+                currentUser = username; isAdmin = true;
+                sessionStorage.setItem('loggedInAdmin', username);
+                showAdminPanel();
+                addActivityLog('تسجيل دخول مسؤول', `قام المسؤول ${username} بتسجيل الدخول`);
+                showToast('تم تسجيل الدخول كمسؤول');
+            } else {
+                showToast('كلمة المرور غير صحيحة', 'error');
+            }
+        });
+
+        elements.adminAccessBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const password = prompt('كلمة مرور المسؤول:');
+            if (password === ADMIN_PASSWORD) {
+                currentUser = 'admin'; isAdmin = true;
+                sessionStorage.setItem('loggedInAdmin', 'admin');
+                showAdminPanel();
+                addActivityLog('وصول إلى لوحة التحكم', 'تم الوصول إلى لوحة التحكم عبر الرابط');
+                showToast('تم الدخول إلى لوحة التحكم');
+            } else {
+                showToast('كلمة المرور غير صحيحة', 'error');
+            }
+        });
+
+        elements.logoutBtn.addEventListener('click', () => {
+            if (confirm('هل تريد تسجيل الخروج؟')) {
+                sessionStorage.removeItem('loggedInUser');
+                currentUser = null;
+                elements.mainContainer.style.display = 'none';
+                elements.loginContainer.style.display = 'block';
+                showToast('تم تسجيل الخروج');
+            }
+        });
+
+        elements.adminLogoutBtn.addEventListener('click', () => {
+            if (confirm('هل تريد تسجيل خروج المسؤول؟')) {
+                sessionStorage.removeItem('loggedInAdmin');
+                currentUser = null; isAdmin = false;
+                elements.adminPanel.style.display = 'none';
+                elements.loginContainer.style.display = 'block';
+                addActivityLog('تسجيل خروج مسؤول', 'قام المسؤول بتسجيل الخروج');
+                showToast('تم تسجيل خروج المسؤول');
+            }
+        });
+
+        elements.backToApp.addEventListener('click', () => {
+            elements.adminPanel.style.display = 'none';
+            elements.mainContainer.style.display = 'block';
+        });
+
+        elements.adminNavBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (btn.id === 'backToApp') return;
+                const section = btn.getAttribute('data-section');
+                elements.adminNavBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                elements.adminSections.forEach(sec => sec.style.display = 'none');
+                document.getElementById(`${section}Section`).style.display = 'block';
+            });
+        });
+
+        elements.searchUsers.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            elements.usersTableBody.querySelectorAll('tr').forEach(row => {
+                row.style.display = row.cells[0].textContent.toLowerCase().includes(term) ? '' : 'none';
+            });
+        });
+
+        elements.searchSites.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            elements.sitesTableBody.querySelectorAll('tr').forEach(row => {
+                const s = row.cells[0].textContent.toLowerCase();
+                const o = row.cells[1].textContent.toLowerCase();
+                row.style.display = (s.includes(term) || o.includes(term)) ? '' : 'none';
+            });
+        });
+
+        elements.usersTableBody.addEventListener('click', (e) => {
+            const target = e.target.closest('button');
+            if (!target) return;
+            const username = target.getAttribute('data-user');
+            if (!username) return;
+
+            if (target.classList.contains('view-user')) {
+                const list = Object.values(sitesDatabase).filter(s => s.owner === username);
+                let txt = '';
+                list.forEach(s => { txt += `${s.name} (مشاهدات: ${s.views || 0})\n`; });
+                alert(`مواقع المستخدم ${username}:\n\n${txt || 'لا توجد مواقع'}`);
+            } else if (target.classList.contains('ban-user')) {
+                const reason = prompt(`سبب حظر ${username}:`, 'انتهاك شروط الاستخدام');
+                if (reason === null) return;
+                bannedDatabase[username] = { bannedAt: new Date().toISOString(), reason, bannedBy: currentUser };
+                localStorage.setItem(DB_BANNED, JSON.stringify(bannedDatabase));
+                loadAdminDashboard();
+                addActivityLog('حظر مستخدم', `تم حظر ${username} بسبب: ${reason}`);
+                showToast(`تم حظر ${username}`);
+            } else if (target.classList.contains('unban-user')) {
+                delete bannedDatabase[username];
+                localStorage.setItem(DB_BANNED, JSON.stringify(bannedDatabase));
+                loadAdminDashboard();
+                addActivityLog('فك حظر مستخدم', `تم فك حظر ${username}`);
+                showToast(`تم فك حظر ${username}`);
+            } else if (target.classList.contains('delete-user')) {
+                if (confirm(`هل تريد حذف المستخدم ${username} وكل مواقعه؟`)) {
+                    Object.keys(sitesDatabase).forEach(id => { if (sitesDatabase[id].owner === username) delete sitesDatabase[id]; });
+                    delete usersDatabase[username];
+                    delete bannedDatabase[username];
+                    localStorage.setItem(DB_USERS, JSON.stringify(usersDatabase));
+                    localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                    localStorage.setItem(DB_BANNED, JSON.stringify(bannedDatabase));
+                    loadAdminDashboard();
+                    addActivityLog('حذف مستخدم', `تم حذف المستخدم ${username} وكل مواقعه`);
+                    showToast(`تم حذف ${username} وكل مواقعه`);
+                }
+            }
+        });
+
+        elements.sitesTableBody.addEventListener('click', (e) => {
+            const target = e.target.closest('button');
+            if (!target) return;
+            const siteId = target.getAttribute('data-id');
+            if (!siteId) return;
+            const site = sitesDatabase[siteId];
+            if (!site) return;
+            if (target.classList.contains('preview-site')) {
+                elements.previewFrame.srcdoc = site.content;
+                elements.previewModal.classList.add('active');
+            } else if (target.classList.contains('delete-site')) {
+                if (confirm(`حذف موقع "${site.name}"؟`)) {
+                    delete sitesDatabase[siteId];
+                    localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                    if (currentSiteId === siteId) { elements.resultSection.style.display = 'none'; currentSiteId = null; }
+                    loadAdminDashboard();
+                    addActivityLog('حذف موقع', `تم حذف موقع ${site.name} للمستخدم ${site.owner}`);
+                    showToast('تم حذف الموقع');
+                }
+            }
+        });
+
+        elements.bannedTableBody.addEventListener('click', (e) => {
+            const target = e.target.closest('button');
+            if (!target) return;
+            const username = target.getAttribute('data-user');
+            if (!username) return;
+            if (target.classList.contains('unban-user')) {
+                delete bannedDatabase[username];
+                localStorage.setItem(DB_BANNED, JSON.stringify(bannedDatabase));
+                loadAdminDashboard();
+                addActivityLog('فك حظر مستخدم', `تم فك حظر ${username}`);
+                showToast(`تم فك حظر ${username}`);
+            } else if (target.classList.contains('delete-user')) {
+                if (confirm(`حذف ${username} نهائياً وكل مواقعه؟`)) {
+                    Object.keys(sitesDatabase).forEach(id => { if (sitesDatabase[id].owner === username) delete sitesDatabase[id]; });
+                    delete usersDatabase[username];
+                    delete bannedDatabase[username];
+                    localStorage.setItem(DB_USERS, JSON.stringify(usersDatabase));
+                    localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                    localStorage.setItem(DB_BANNED, JSON.stringify(bannedDatabase));
+                    loadAdminDashboard();
+                    addActivityLog('حذف مستخدم محظور', `تم حذف ${username} نهائياً`);
+                    showToast(`تم حذف ${username} نهائياً`);
+                }
+            }
+        });
+
+        elements.fileInput.addEventListener('change', function() {
+            if (this.files[0]) {
+                const file = this.files[0];
+                const size = file.size > 1024 * 1024 ? (file.size / (1024 * 1024)).toFixed(2) + ' MB' : (file.size / 1024).toFixed(2) + ' KB';
+                elements.fileName.innerHTML = `<span class="badge badge-active"><i class="fas fa-file-code"></i> ${file.name} (${size})</span>`;
+            }
+        });
+
+        elements.uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.uploadArea.style.borderColor = '#7c6cf0';
+            elements.uploadArea.style.background = 'rgba(124,108,240,0.06)';
+        });
+        elements.uploadArea.addEventListener('dragleave', () => {
+            elements.uploadArea.style.borderColor = '';
+            elements.uploadArea.style.background = '';
+        });
+        elements.uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.uploadArea.style.borderColor = '';
+            elements.uploadArea.style.background = '';
+            const file = e.dataTransfer.files[0];
+            if (file && file.name.endsWith('.html')) {
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                elements.fileInput.files = dt.files;
+                elements.fileInput.dispatchEvent(new Event('change'));
+                showToast('تم تحميل الملف');
+            }
+        });
+
+        elements.clearBtn.addEventListener('click', () => {
+            if (confirm('مسح كل المحتويات؟')) {
+                elements.fileInput.value = '';
+                elements.codeInput.value = '';
+                elements.fileName.innerHTML = '';
+                elements.resultSection.style.display = 'none';
+                showToast('تم مسح المحتويات');
+            }
+        });
+
+        elements.uploadBtn.addEventListener('click', async () => {
+            if (!currentUser) { showToast('يجب تسجيل الدخول أولاً', 'error'); return; }
+            const file = elements.fileInput.files[0];
+            let content = '';
+            if (file) {
+                elements.progress.style.display = 'block';
+                elements.progressBar.style.width = '30%';
+                try {
+                    content = await readFile(file);
+                    elements.progressBar.style.width = '70%';
+                    await uploadSite(content, file.name);
+                } catch (error) {
+                    showToast('خطأ في قراءة الملف', 'error');
+                    elements.progress.style.display = 'none';
+                }
+            } else if (elements.codeInput.value.trim()) {
+                elements.progress.style.display = 'block';
+                elements.progressBar.style.width = '50%';
+                content = elements.codeInput.value;
+                await uploadSite(content, 'موقع HTML');
+            } else {
+                showToast('اختر ملف أو اكتب كود', 'error');
+            }
+        });
+
+        function readFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = e => resolve(e.target.result);
+                reader.onerror = reject;
+                reader.readAsText(file);
+            });
+        }
+
+        async function uploadSite(content, name) {
+            try {
+                const id = 'site_' + Date.now();
+                sitesDatabase[id] = { id, name, content, owner: currentUser, date: new Date().toISOString(), views: 0 };
+                localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                const url = `${window.location.origin}${window.location.pathname}?site=${id}`;
+                elements.progressBar.style.width = '100%';
+                setTimeout(() => {
+                    showResult(id, url);
+                    elements.progress.style.display = 'none';
+                    elements.progressBar.style.width = '0%';
+                    loadUserFiles();
+                    updateStats();
+                    addActivityLog('رفع موقع', `قام ${currentUser} برفع موقع جديد: ${name}`);
+                    showToast('تم رفع الموقع بنجاح');
+                }, 500);
+            } catch (error) {
+                showToast('خطأ في الرفع', 'error');
+                elements.progress.style.display = 'none';
+            }
+        }
+
+        function showResult(id, url) {
+            currentSiteId = id;
+            elements.urlDisplay.textContent = url;
+            elements.resultSection.style.display = 'block';
+            elements.resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        elements.copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(elements.urlDisplay.textContent)
+                .then(() => {
+                    const orig = elements.copyBtn.innerHTML;
+                    elements.copyBtn.innerHTML = '<i class="fas fa-check"></i> تم النسخ';
+                    showToast('تم نسخ الرابط');
+                    setTimeout(() => { elements.copyBtn.innerHTML = orig; }, 2000);
+                })
+                .catch(() => {
+                    const el = document.createElement('textarea');
+                    el.value = elements.urlDisplay.textContent;
+                    document.body.appendChild(el);
+                    el.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(el);
+                    showToast('تم نسخ الرابط');
+                });
+        });
+
+        elements.openBtn.addEventListener('click', () => {
+            if (currentSiteId && sitesDatabase[currentSiteId]) {
+                const site = sitesDatabase[currentSiteId];
+                site.views++;
+                localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                const win = window.open('', '_blank');
+                win.document.write(site.content);
+                win.document.close();
+                loadUserFiles();
+                updateStats();
+                showToast('تم فتح الموقع');
+            }
+        });
+
+        elements.deleteBtn.addEventListener('click', () => {
+            if (currentSiteId && confirm('حذف هذا الموقع؟')) {
+                delete sitesDatabase[currentSiteId];
+                localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                elements.resultSection.style.display = 'none';
+                currentSiteId = null;
+                loadUserFiles();
+                updateStats();
+                showToast('تم حذف الموقع');
+            }
+        });
+
+        elements.filesList.addEventListener('click', (e) => {
+            const target = e.target.closest('button');
+            if (!target) return;
+            const siteId = target.getAttribute('data-id');
+            if (!siteId) return;
+            const site = sitesDatabase[siteId];
+            if (!site) return;
+            if (target.classList.contains('view-file')) {
+                const win = window.open('', '_blank');
+                win.document.write(site.content);
+                win.document.close();
+                site.views++;
+                localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                loadUserFiles();
+                updateStats();
+                showToast('تم فتح الموقع');
+            } else if (target.classList.contains('delete-file')) {
+                if (confirm('حذف هذا الموقع؟')) {
+                    delete sitesDatabase[siteId];
+                    localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                    if (currentSiteId === siteId) { elements.resultSection.style.display = 'none'; currentSiteId = null; }
+                    loadUserFiles();
+                    updateStats();
+                    showToast('تم حذف الموقع');
+                }
+            }
+        });
+
+        elements.deleteFilesBtn.addEventListener('click', () => {
+            if (!currentUser) return;
+            const list = Object.values(sitesDatabase).filter(s => s.owner === currentUser);
+            if (list.length === 0) { showToast('لا توجد ملفات لحذفها', 'error'); return; }
+            if (confirm(`هل تريد حذف جميع ملفاتك (${list.length} ملف)؟`)) {
+                Object.keys(sitesDatabase).forEach(id => { if (sitesDatabase[id].owner === currentUser) delete sitesDatabase[id]; });
+                localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                if (currentSiteId) { elements.resultSection.style.display = 'none'; currentSiteId = null; }
+                loadUserFiles();
+                updateStats();
+                showToast('تم حذف جميع ملفاتك');
+            }
+        });
+
+        elements.closePreview.addEventListener('click', () => elements.previewModal.classList.remove('active'));
+        elements.previewModal.addEventListener('click', (e) => {
+            if (e.target === elements.previewModal) elements.previewModal.classList.remove('active');
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            const params = new URLSearchParams(window.location.search);
+            const siteId = params.get('site');
+            if (siteId && sitesDatabase[siteId]) {
+                const site = sitesDatabase[siteId];
+                site.views++;
+                localStorage.setItem(DB_SITES, JSON.stringify(sitesDatabase));
+                document.open();
+                document.write(site.content);
+                document.close();
+                return;
+            }
+            if (!elements.codeInput.value.trim()) {
+                elements.codeInput.value = `<!DOCTYPE html>
+<html dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>موقعي | استضافة HTML PRO</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:system-ui,sans-serif; }
+body { background:linear-gradient(145deg,#0a0f1e,#0e1428); color:#e8eaf6; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+.container { max-width:800px; margin:0 auto; background:#131a30; border:1px solid rgba(120,140,220,0.14); border-radius:22px; padding:40px; box-shadow:0 8px 28px rgba(0,0,0,0.4); }
+h1 { background:linear-gradient(135deg,#a08cff,#7c6cf0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; font-size:40px; margin-bottom:16px; }
+p { font-size:16px; line-height:1.6; margin-bottom:16px; color:#a8b0d0; }
+.badge { background:rgba(124,108,240,0.14); color:#c4b5fd; padding:8px 20px; border-radius:9999px; display:inline-block; font-weight:600; border:1px solid rgba(124,108,240,0.28); }
+.note { background:#0d1224; border-right:4px solid #7c6cf0; padding:18px; border-radius:12px; margin:18px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🚀 مرحباً بك في استضافة HTML PRO</h1>
+<p>تم رفع هذا الموقع عبر <span class="badge">منصة استضافة HTML PRO</span></p>
+<p>للمزيد تواصل: <strong style="color:#c4b5fd;">@yyf_r</strong></p>
+<div class="note">
+<h3 style="color:#c4b5fd;margin-bottom:8px;">ملاحظة</h3>
+<p>قم بتعديل هذا الكود أو ارفع ملف HTML خاص بك</p>
+</div>
+</div>
+</body>
+</html>`;
+            }
+        });
+    </script>
+
+</body></html>
